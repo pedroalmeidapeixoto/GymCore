@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="GymCore.Api/GymCore.Api.csproj" />
+  <Project Path="GymCore.Application/GymCore.Application.vbproj" />
+  <Project Path="GymCore.Domain/GymCore.Domain.vbproj" />
+  <Project Path="GymCore.Infrastructure/GymCore.Infrastructure.vbproj" />
+</Solution>
