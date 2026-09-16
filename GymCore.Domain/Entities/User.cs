@@ -8,11 +8,11 @@ namespace GymCore.Domain.Entities
     public class User : Entity
     {
         public string Name { get; private set; } = string.Empty;
-        public string Email { get; private set; }
-        public string PasswordHash { get; private set; } 
+        public string Email { get; private set; } = string.Empty;
+        public string PasswordHash { get; private set; } = string.Empty;
         public bool IsActive { get; private set; }
         public Guid RoleId { get; private set; }
-        public Role Role { get; private set; }
+        public Role Role { get; private set; } = null!;
 
         protected User() 
         { 

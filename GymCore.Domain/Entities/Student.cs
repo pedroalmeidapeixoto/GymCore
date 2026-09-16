@@ -10,7 +10,7 @@ namespace GymCore.Domain.Entities
     public class Student : Entity
     {
         public Guid UserId  { get; private set; }
-        public User User { get; private set; }
+        public User User { get; private set; } = null!;
         public string Cpf { get; private set; } = string.Empty;
         public DateOnly BirthDate { get; private set; }
         public string Phone { get; private set; } = string.Empty;
