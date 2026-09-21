@@ -49,7 +49,7 @@ namespace GymCore.Domain.Entities
                 throw new DomainException("O treino já está encerrado.");
 
             if (endDate < StartDate)
-                throw new DomainException("A data de encerrament não pode ser maior que a data de início");
+                throw new DomainException("A data de encerramento não pode ser anterior à data de início");
 
 
             EndDate = endDate;
