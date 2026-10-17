@@ -1,5 +1,6 @@
 using GymCore.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using GymCore.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,15 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<GymCoreDbContext>(options =>
     options.UseNpgsql(connectionString));
 
+builder.Services.AddScoped<DatabaseSeeder>();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+    await seeder.SeedReferenceDataAsync();
+}
 
 if (app.Environment.IsDevelopment())
 {
