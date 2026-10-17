@@ -41,6 +41,8 @@ namespace GymCore.Infrastructure.Persistence.Configurations
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasIndex(e => e.StudentId, "IX_enrollments_StudentId");
+
             builder.HasIndex(e => e.StudentId)
                 .HasDatabaseName("ux_enrollments_student_active")
                 .IsUnique()
