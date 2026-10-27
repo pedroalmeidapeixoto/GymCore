@@ -21,12 +21,17 @@ using (var scope = app.Services.CreateScope())
 {
     var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
     await seeder.SeedReferenceDataAsync();
-}
 
-if (app.Environment.IsDevelopment())
+   if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    await seeder.SeedDevelopmentDataAsync();
 
 }
+   if (app.Environment.IsDevelopment())
+    {
+        app.MapOpenApi();
+    }
+}
+
 
 app.Run();
