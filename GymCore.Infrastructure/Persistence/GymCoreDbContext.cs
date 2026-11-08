@@ -1,9 +1,10 @@
 ﻿using GymCore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using GymCore.Application.Common;
 
 namespace GymCore.Infrastructure.Persistence
 {
-    public class GymCoreDbContext : DbContext
+    public class GymCoreDbContext : DbContext, IUnitOfWork
     {
         public GymCoreDbContext(DbContextOptions<GymCoreDbContext> options)
             : base(options)

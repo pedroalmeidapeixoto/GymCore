@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/GymCore.UnitTests/GymCore.UnitTests.csproj" />
+  </Folder>
   <Project Path="GymCore.Api/GymCore.Api.csproj" />
   <Project Path="GymCore.Application/GymCore.Application.csproj" />
   <Project Path="GymCore.Domain/GymCore.Domain.csproj" />
