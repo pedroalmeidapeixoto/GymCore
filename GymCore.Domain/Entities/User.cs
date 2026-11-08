@@ -47,7 +47,7 @@ namespace GymCore.Domain.Entities
             Touch();
         }
 
-        public void Deactive()
+        public void Deactivate()
         {
             IsActive = false;
             Touch();
