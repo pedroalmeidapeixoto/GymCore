@@ -48,6 +48,9 @@ namespace GymCore.Infrastructure.Persistence.Seed
 
             if (!await _context.Exercises.AnyAsync())
                 await SeedTrainingAsync();
+
+            if (!await _context.PhysicalAssessments.AnyAsync())
+                await SeedAssessmentsAsync();
         }
 
             private async Task SeedPeopleAsync()
@@ -236,6 +239,64 @@ namespace GymCore.Infrastructure.Persistence.Seed
 
             await _context.SaveChangesAsync();
         }
+
+        private async Task SeedAssessmentsAsync()
+        {
+            var students = await _context.Students
+                .Include(s => s.User)
+                .ToDictionaryAsync(s => s.User.Email);
+
+            var personals = await _context.PersonalTrainers
+                .Include(p => p.User)
+                .ToDictionaryAsync(p => p.User.Email);
+
+            var ana = students["ana.aluna@gymcore.test"];
+            var bruno = students["bruno.aluno@gymcore.test"];
+            var clara = students["clara.aluna@gymcore.test"];
+
+            var carlos = personals["carlos.personal@gymcore.test"];
+            var marina = personals["marina.personal@gymcore.test"];
+
+            var today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+            var anaFirst = new PhysicalAssessment(ana, marina, today.AddDays(-280),
+                68.5m, 165m, 29.5m, 24.0m, "Avaliação inicial");
+            var anaSecond = new PhysicalAssessment(ana, carlos, today.AddDays(-115),
+                66.0m, 165m, 27.0m, 25.5m, null);
+            var anaThird = new PhysicalAssessment(ana, carlos, today.AddDays(-20),
+                63.8m, 165m, 24.5m, 27.0m, "Boa evolução de massa muscular");
+
+            var brunoFirst = new PhysicalAssessment(bruno, carlos, today.AddDays(-50),
+                82.4m, 178m, 22.0m, 36.5m, "Avaliação inicial");
+
+            var claraFirst = new PhysicalAssessment(clara, marina, today.AddDays(-35),
+                58.2m, 160m, null, null, "Sem bioimpedância disponível");
+
+            var measurements = new[]
+            {
+                new BodyMeasurement(anaFirst, MeasurementType.Waist, 82.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(anaFirst, MeasurementType.Hip, 101.0m, MeasurementUnit.Cm),
+
+                new BodyMeasurement(anaSecond, MeasurementType.Waist, 79.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(anaSecond, MeasurementType.Hip, 99.5m, MeasurementUnit.Cm),
+
+                new BodyMeasurement(anaThird, MeasurementType.Waist, 75.5m, MeasurementUnit.Cm),
+                new BodyMeasurement(anaThird, MeasurementType.Hip, 97.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(anaThird, MeasurementType.RightArm, 28.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(anaThird, MeasurementType.LeftArm, 27.5m, MeasurementUnit.Cm),
+
+                new BodyMeasurement(brunoFirst, MeasurementType.Chest, 98.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(brunoFirst, MeasurementType.Waist, 88.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(brunoFirst, MeasurementType.RightArm, 33.5m, MeasurementUnit.Cm),
+                new BodyMeasurement(brunoFirst, MeasurementType.LeftArm, 33.0m, MeasurementUnit.Cm),
+
+                new BodyMeasurement(claraFirst, MeasurementType.Waist, 70.0m, MeasurementUnit.Cm),
+                new BodyMeasurement(claraFirst, MeasurementType.Hip, 95.0m, MeasurementUnit.Cm),
+            };
+
+            _context.AddRange(measurements);
+
+            await _context.SaveChangesAsync();
+        }
     }
-    
 }
