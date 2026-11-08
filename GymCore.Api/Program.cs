@@ -1,6 +1,9 @@
+using GymCore.Application.Common;
+using GymCore.Application.Plans;
 using GymCore.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using GymCore.Infrastructure.Persistence.Repositories;
 using GymCore.Infrastructure.Persistence.Seed;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,10 @@ builder.Services.AddDbContext<GymCoreDbContext>(options =>
 
 builder.Services.AddScoped<DatabaseSeeder>();
 
+builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<GymCoreDbContext>());
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+builder.Services.AddScoped<PlanService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -22,16 +29,15 @@ using (var scope = app.Services.CreateScope())
     var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
     await seeder.SeedReferenceDataAsync();
 
-   if (app.Environment.IsDevelopment())
-{
-    await seeder.SeedDevelopmentDataAsync();
-
-}
-   if (app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
-        app.MapOpenApi();
+        await seeder.SeedDevelopmentDataAsync();
     }
 }
 
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
 
 app.Run();
