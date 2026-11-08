@@ -61,5 +61,14 @@ namespace GymCore.Domain.Entities
             PasswordHash = newPasswordHash;
             Touch();
         }
+
+        public void Rename(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+                throw new DomainException("O nome de Usuário é obrigatório");
+
+            Name = newName.Trim();
+            Touch();
+        }
     }
 }
