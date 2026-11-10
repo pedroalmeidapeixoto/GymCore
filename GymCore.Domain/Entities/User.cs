@@ -47,7 +47,7 @@ namespace GymCore.Domain.Entities
             Touch();
         }
 
-        public void Deactive()
+        public void Deactivate()
         {
             IsActive = false;
             Touch();
@@ -59,6 +59,15 @@ namespace GymCore.Domain.Entities
                 throw new DomainException("O hash de senha é obrigatório");
 
             PasswordHash = newPasswordHash;
+            Touch();
+        }
+
+        public void Rename(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+                throw new DomainException("O nome de Usuário é obrigatório");
+
+            Name = newName.Trim();
             Touch();
         }
     }

@@ -47,5 +47,15 @@ namespace GymCore.Domain.Entities
 
             return new string(cpf.Where(char.IsDigit).ToArray());
         }
+
+        public void Update(DateOnly birthDate, string phone)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                throw new DomainException("O telefone do aluno é obrigatório");
+
+            BirthDate = birthDate;
+            Phone = phone.Trim();
+            Touch();
+        }
     }
 }
