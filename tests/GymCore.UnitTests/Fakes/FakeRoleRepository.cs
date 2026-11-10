@@ -5,7 +5,11 @@ namespace GymCore.UnitTests.Fakes
 {
     public class FakeRoleRepository : IRoleRepository
     {
-        public List<Role> Roles { get; } = new() { new Role(RoleNames.Student) };
+        public List<Role> Roles { get; } = new()
+{
+    new Role(RoleNames.Student),
+    new Role(RoleNames.PersonalTrainer)
+};
 
         public Task<Role?> GetByNameAsync(string name)
         {
