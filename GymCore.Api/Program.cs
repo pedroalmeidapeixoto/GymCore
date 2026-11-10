@@ -2,6 +2,7 @@ using GymCore.Application.Common;
 using GymCore.Application.Plans;
 using GymCore.Application.Roles;
 using GymCore.Application.Students;
+using GymCore.Application.PersonalTrainers;
 using GymCore.Application.Users;
 using GymCore.Infrastructure.Persistence;
 using GymCore.Infrastructure.Persistence.Repositories;
@@ -31,6 +32,8 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<IPersonalTrainerRepository, PersonalTrainerRepository>();
+builder.Services.AddScoped<PersonalTrainerService>();
 
 var app = builder.Build();
 
