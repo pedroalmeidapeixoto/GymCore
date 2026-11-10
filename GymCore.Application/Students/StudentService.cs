@@ -3,14 +3,11 @@ using GymCore.Application.Common.Exceptions;
 using GymCore.Application.Roles;
 using GymCore.Application.Users;
 using GymCore.Domain.Entities;
-using GymCore.Domain.Exceptions;
 
 namespace GymCore.Application.Students
 {
     public class StudentService
     {
-        private const int MinimumPasswordLength = 8;
-
         private readonly IStudentRepository _students;
         private readonly IUserRepository _users;
         private readonly IRoleRepository _roles;
@@ -47,8 +44,7 @@ namespace GymCore.Application.Students
 
         public async Task<StudentResponse> CreateAsync(CreateStudentRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Password) || request.Password.Length < MinimumPasswordLength)
-                throw new DomainException($"A senha deve ter pelo menos {MinimumPasswordLength} caracteres.");
+            PasswordPolicy.EnsureValid(request.Password);
 
             var role = await _roles.GetByNameAsync(RoleNames.Student)
                 ?? throw new InvalidOperationException($"O papel '{RoleNames.Student}' não está cadastrado.");

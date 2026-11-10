@@ -35,5 +35,14 @@ namespace GymCore.Domain.Entities
             Cref = cref.Trim().ToUpperInvariant();
             Phone = phone.Trim();
         }
+
+        public void Update(string phone)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                throw new DomainException("O telefone do Personal é obrigatório");
+
+            Phone = phone.Trim();
+            Touch();
+        }
     }
 }
