@@ -9,6 +9,8 @@ using GymCore.Infrastructure.Persistence.Repositories;
 using GymCore.Infrastructure.Persistence.Seed;
 using GymCore.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
+using GymCore.Application.Enrollments;
+using GymCore.Application.Payments;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +36,9 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<IPersonalTrainerRepository, PersonalTrainerRepository>();
 builder.Services.AddScoped<PersonalTrainerService>();
+builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<EnrollmentService>();
 
 var app = builder.Build();
 
